@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init
+data:
+  init.sh: |-
+   #!/bin/bash
+   set -e
+   psql -v ON_ERROR_STOP=1 --username "$POSGRES_USER" --dbname "$PSOTGRES_DB" <<-EOSQL
+    CREATE USER jasviers WITH PASSWORD 'qwerty';
+    CREATE DATABASE jasviers_db;
+    GRANT ALL PRIVILEGES ON DATABASE jasviers_db TO jasviers_db;
+   EOSQL
