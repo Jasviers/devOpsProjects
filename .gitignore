@@ -3,3 +3,4 @@ slackWebhooks.txt
 03terratest/terraform_azure_01/terraform.*
 03terratest/terraform_azure_02/.*
 03terratest/terraform_azure_02/terraform.*
+04ansibleTest/.vagrant/*

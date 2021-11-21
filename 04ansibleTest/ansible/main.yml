@@ -1,0 +1,84 @@
+---
+- hosts: Centos
+  become: true
+  vars_files:
+    - vars/default.yml
+
+  tasks:
+
+    - name: Install yum utils
+      yum:
+        name: yum-utils
+        state: present
+
+    - name: Install pyhon 3
+      yum:
+        name: python3
+        state: present
+
+    - name: Install pip3
+      yum:
+        name: python3-pip
+        state: present
+
+    - name: Install device-mapper-persistent-data
+      yum:
+        name: device-mapper-persistent-data
+        state: present
+
+    - name: Install lvm2
+      yum:
+        name: lvm2
+        state: present
+
+    - name: Add Docker repo
+      get_url:
+        url: https://download.docker.com/linux/centos/docker-ce.repo
+        dest: /etc/yum.repos.d/docer-ce.repo
+      become: true
+
+    - name: Enable Docker Edge repo
+      ini_file:
+        dest: /etc/yum.repos.d/docer-ce.repo
+        section: 'docker-ce-edge'
+        option: enabled
+        value: 0
+      become: true
+
+    - name: Enable Docker Test repo
+      ini_file:
+        dest: /etc/yum.repos.d/docer-ce.repo
+        section: 'docker-ce-test'
+        option: enabled
+        value: 0
+      become: true
+
+    - name: Install Docker
+      package:
+        name: docker-ce
+        state: latest
+      become: true
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: true
+      become: true
+
+    - name: Add user vagrant to docker group
+      user:
+        name: vagrant
+        groups: docker
+        append: true
+      become: true
+
+    - name: Define Python interpreter
+      set_fact:
+        my_interpreter: "/usr/bin/python3"
+
+    - name: Install docker with pip
+      command: "pip3 install docker"
+
+    - name: Create default containers
+      command: "docker run {{default_container_image}}"
