@@ -1,0 +1,26 @@
+digraph {
+	compound = "true"
+	newrank = "true"
+	subgraph "root" {
+		"[root] azurerm_resource_group.example (expand)" [label = "azurerm_resource_group.example", shape = "box"]
+		"[root] azurerm_resource_group.example_2 (expand)" [label = "azurerm_resource_group.example_2", shape = "box"]
+		"[root] azurerm_resource_group.example_3 (expand)" [label = "azurerm_resource_group.example_3", shape = "box"]
+		"[root] output.output_example_id" [label = "output.output_example_id", shape = "note"]
+		"[root] output.output_example_name" [label = "output.output_example_name", shape = "note"]
+		"[root] provider[\"registry.terraform.io/hashicorp/azurerm\"]" [label = "provider[\"registry.terraform.io/hashicorp/azurerm\"]", shape = "diamond"]
+		"[root] azurerm_resource_group.example (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/azurerm\"]"
+		"[root] azurerm_resource_group.example_2 (expand)" -> "[root] azurerm_resource_group.example (expand)"
+		"[root] azurerm_resource_group.example_3 (expand)" -> "[root] azurerm_resource_group.example (expand)"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] azurerm_resource_group.example_2 (expand)"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] azurerm_resource_group.example_3 (expand)"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] output.output_example_id"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] output.output_example_name"
+		"[root] output.output_example_id" -> "[root] azurerm_resource_group.example (expand)"
+		"[root] output.output_example_name" -> "[root] azurerm_resource_group.example (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/azurerm\"] (close)" -> "[root] azurerm_resource_group.example_2 (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/azurerm\"] (close)" -> "[root] azurerm_resource_group.example_3 (expand)"
+		"[root] root" -> "[root] meta.count-boundary (EachMode fixup)"
+		"[root] root" -> "[root] provider[\"registry.terraform.io/hashicorp/azurerm\"] (close)"
+	}
+}
+
